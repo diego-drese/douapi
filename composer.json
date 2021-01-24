@@ -1,0 +1,39 @@
+{
+    "name": "oka-6/douapi",
+    "description": "Package douapi",
+    "type": "package",
+    "license": "MIT",
+    "keywords": [
+        "DOU",
+        "Diario oficial da uniao",
+        "api"
+    ],
+    "authors": [
+        {
+            "name": "Diego Drese",
+            "email": "diego-neumann@hotmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Oka6\\DouApi\\DouApiServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Oka6\\DouApi\\": "src/"
+        }
+    },
+
+    "require": {
+
+    },
+    "config": {
+        "sort-packages": true
+    }
+
+}
