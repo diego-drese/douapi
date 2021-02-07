@@ -21,7 +21,7 @@ class DouApiServiceProvider extends ServiceProvider {
 	 */
 	public function boot() {
 		
-		$this->loadViewsFrom(__DIR__ . '/Resources/views', 'Admin');
+		$this->loadViewsFrom(__DIR__ . '/Resources/views', 'DouApi');
 		$this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
 		$this->loadRoutesFrom(__DIR__ . '/Http/Routes/web.php');
 		
@@ -30,13 +30,17 @@ class DouApiServiceProvider extends ServiceProvider {
 			__DIR__ . '/../vendor' => public_path('vendor'),
 		], 'public');
 		
+		$this->publishes([
+			__DIR__ . '/../storage/douapi' => public_path('../storage/douapi'),
+		], 'public');
+		
+		$this->publishes([
+			__DIR__ . '/automation' => public_path('../automation'),
+		], 'public');
 
 		$this->mergeConfigFrom(
 			__DIR__ . '/Config/database.php', 'database.connections'
 		);
-	
-		
-		$this->mergeViewComposer();
 		
 		if (php_sapi_name() != 'cli') {
 			$this->setObservers();

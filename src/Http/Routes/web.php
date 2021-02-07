@@ -12,6 +12,7 @@
 
 $prefix_url = \Illuminate\Support\Facades\Config::get('admin.prefix_url');
 Route::group(['prefix' => $prefix_url, 'middleware' => ['web', 'auth', 'Oka6\Admin\Http\Middleware\MiddlewareAdmin']], function () {
+	Route::get('/dou', 'Oka6\DouApi\Http\Controllers\DouController@index')->name('dou.index')->where(['iconAdmin' => 'mdi mdi-book-open-page-variant', 'menuAdmin' => "DOU", 'parentRouteNameAdmin' => 'Dou', 'nameAdmin' => 'DOU', 'isDefaultAdmin' => '1']);
 	
 	Route::fallback(function () {
 		$prefix_url = \Illuminate\Support\Facades\Config::get('admin.prefix_url');
