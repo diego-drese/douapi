@@ -41,6 +41,9 @@ class DouApiServiceProvider extends ServiceProvider {
 		$this->mergeConfigFrom(
 			__DIR__ . '/Config/database.php', 'database.connections'
 		);
+		$this->mergeConfigFrom(
+			__DIR__ . '/Config/stripe.php', 'stripe'
+		);
 		
 		if (php_sapi_name() != 'cli') {
 			$this->setObservers();
@@ -62,6 +65,9 @@ class DouApiServiceProvider extends ServiceProvider {
 	protected function mergeConfigFrom($path, $key) {
 		$config = $this->app['config']->get($key, []);
 		if ($key == 'database.connections' && !isset($config['oka6_douapi'])) {
+			$this->app['config']->set($key, array_merge($config, require $path));
+		}
+		if ($key == 'stripe' && !isset($config['public_key'])) {
 			$this->app['config']->set($key, array_merge($config, require $path));
 		}
 	}

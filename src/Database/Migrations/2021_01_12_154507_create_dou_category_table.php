@@ -13,7 +13,7 @@ class CreateDouCategoryTable extends Migration {
 	 */
 	protected $connection = 'oka6_douapi';
 	public function up() {
-		Schema::connection($this->connection)->create('dou_category', function (Blueprint $table) {
+		Schema::connection($this->connection)->table('dou_category', function (Blueprint $table) {
 			$table->background('id');
 			$table->background('name');
 			$table->background('slug');
