@@ -117,6 +117,7 @@
                         <h5 id="modal-organ">Orgão</h5>
                         <h5 id="modal-sub-organ">Sub orgão</h5>
                         <p id="info">Sessão - Tipo - data</p>
+                        <p id="link">---</p>
                     </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -130,9 +131,7 @@
                     <div id="text">
 
                     </div>
-                    <div id="link">
-
-                    </div>
+                  
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
