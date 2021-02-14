@@ -16,6 +16,21 @@ class DouCategory extends Model {
 	];
 	protected $table = 'dou_category';
 	protected $connection = 'oka6_douapi';
+	public static function getToSaveFilter($ids){
+		if(!count($ids)) return [];
+		$data = self::getByArrayIds($ids);
+		$array= [];
+		foreach ($data as $value){
+			$array[] = ['id'=>$value->id, 'name'=>$value->name];
+		}
+		return $array;
+	}
+	public static function getByArrayIds($ids){
+		$idsMap = array_map(function($id) {
+			return (int)$id;
+		}, $ids);
+		return self::whereIn('id', $idsMap)->get();
+	}
 	
 	public static function createOrUpdate($name) {
 		$splitName  = explode('/', $name);

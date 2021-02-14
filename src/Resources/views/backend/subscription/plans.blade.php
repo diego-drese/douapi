@@ -4,7 +4,7 @@
     <div class="card p-4">
         {{ csrf_field() }}
             @foreach($data as $key=>$plan)
-                    @if($key%3==0)
+                    @if($key>0 && $key%3==0 )
                         </div>
                     @endif
                     @if($key==0 || $key%3==0)

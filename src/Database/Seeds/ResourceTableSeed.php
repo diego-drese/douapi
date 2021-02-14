@@ -22,7 +22,7 @@ class ResourceTableSeed extends Seeder {
 					'name' => "Configurações",
 					'menu' => 'Configurações',
 					'is_menu' => 1,
-					'route_name' => 'Configuration',
+					'route_name' => 'douapi.Configuration',
 					'icon' => 'fas fa-cogs',
 					'controller_method' => '',
 					'can_be_default' => 0,

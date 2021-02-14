@@ -3,7 +3,6 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-
             <div class=" align-items-center m-b-10">
                 <div class="row">
                     <div class="col-6">
@@ -35,8 +34,11 @@
                             <label for="doc">Seção</label>
                             <select class="form-control" id="pub" multiple>
                                 <option value="DO1">Seção 1</option>
+                                <option value="DO1E">Seção 1 Extra</option>
                                 <option value="DO2">Seção 2</option>
+                                <option value="DO2E">Seção 2 Extra</option>
                                 <option value="DO3">Seção 3</option>
+                                <option value="DO3E">Seção 3 Extra</option>
                             </select>
                         </div>
                     </div>
@@ -44,7 +46,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="period">Periodo</label>
-                            <input type="text" name="period" id="period" class="form-control shawCalRanges">
+                            <input type="text" name="period" id="period" class="form-control shawCalRanges" autocomplete="off">
                         </div>
                     </div>
                     <div class="col-3">
@@ -68,13 +70,14 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-3">
                         <div class="form-group">
                             <label for="doc">&nbsp;</label><br/>
                             <button style=""  class="btn btn-success" id="searsh">Buscar</button>
+                            <button style=""  class="btn btn-info" id="clear">Limpar</button>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="form-group">
                             <label for="doc">Último processamento:</label><br/>
                             <p class="note-date font-12 text-muted p-t-5">{{$lastProcessed}}</p>
@@ -185,13 +188,99 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            var emptyStorageFilter = function (){
+                $('#categories').val('').trigger('change')
+                $('#type').val('').trigger('change');
+                $('#subject').val('').trigger('change');
+                $('#pub').val('').trigger('change');
+                $('#period').val('').trigger('change');
+                $('#order').val('date').trigger('change');
+                $('#direction').val('desc').trigger('change');
+                saveStorageFilter();
+            }
+            var saveStorageFilter =  function(){
+                var categoriesStorage = [];
+                var typeStorage = [];
+                var pubStorage = [];
 
+                if($('#categories').val()!=""){
+                    $('#categories option').each(function (){
+                        categoriesStorage.push({'text':this.text,'value':this.value})
+                    });
+                }
+
+                if($('#type').val()!="") {
+                    $('#type option').each(function () {
+                        typeStorage.push({'text': this.text, 'value': this.value})
+                    });
+                }
+
+                if($('#pub').val()!="") {
+                    $('#pub option:selected').each(function () {
+                        pubStorage.push({'text': this.text, 'value': this.value})
+                    });
+                }
+
+                localStorage.setItem('categories', JSON.stringify(categoriesStorage));
+                localStorage.setItem('type', JSON.stringify(typeStorage));
+                localStorage.setItem('subject', $("#subject").val());
+                localStorage.setItem('pub', JSON.stringify(pubStorage));
+                localStorage.setItem('period', $("#period").val());
+                localStorage.setItem('order', $("#order").val());
+                localStorage.setItem('direction', $("#direction").val());
+            }
+            var setStorageFilter =  function(){
+                var categoriesStorage   = localStorage.getItem('categories');
+                var typeStorage         = localStorage.getItem('type');
+                var subjectStorage      = localStorage.getItem('subject');
+                var pubStorage          = localStorage.getItem('pub');
+                var periodStorage       = localStorage.getItem('period');
+                var orderStorage        = localStorage.getItem('order');
+                var directionStorage    = localStorage.getItem('direction');
+                var option              = null;
+                if(categoriesStorage){
+                    categoriesStorage = JSON.parse(categoriesStorage);
+                    for (var i=0; i<categoriesStorage.length;i++){
+                        option = categoriesStorage[i];
+                        $('#categories').append('<option value="'+option.value+'" selected>'+option.text+'</option>')
+                    }
+                }
+                if(typeStorage){
+                    typeStorage = JSON.parse(typeStorage);
+                    for (var i=0; i<typeStorage.length;i++){
+                        option = typeStorage[i];
+                        $('#type').append('<option value="'+option.value+'" selected>'+option.text+'</option>')
+                    }
+                }
+                if(subjectStorage){
+                    $('#subject').val(subjectStorage)
+                }
+
+                if(pubStorage){
+                    pubStorage = JSON.parse(pubStorage);
+                    for (var i=0; i<pubStorage.length;i++){
+                        option = pubStorage[i];
+                        $('#pub option[value='+option.value+']').attr('selected','selected');
+                    }
+                }
+
+                if(periodStorage){
+                    $('#period').val(periodStorage)
+                }
+                if(orderStorage){
+                    $('#order option[value='+orderStorage+']').attr('selected','selected');
+                }
+                if(directionStorage){
+                    $('#direction option[value='+directionStorage+']').attr('selected','selected');
+                }
+
+            };
+            setStorageFilter();
             $('#categories').select2({
                 width:'100%',
                 placeholder: 'Buscar por orgão',
                 tag:true,
                 minimumInputLength: 3,
-
                 ajax: {
                     url: '{{route('dou.index')}}',
                     data: function (params) {
@@ -281,6 +370,8 @@
 
             });
 
+
+
             $('#date').change(function () {
                 var dateFilter = this.value;
                 ajaxData(urlDocumentNew, {date:dateFilter}, buildPieChart, 'document_new');
@@ -314,13 +405,14 @@
                 processing: true,
                 autoWidth: false,
                 orderCellsTop: true,
-                //stateSave: true,
+
                 searching: false,
                 lengthChange: false,
                 ajax: {
                     url: '{{ route('dou.index') }}',
                     type: 'GET',
                     data: function (d) {
+                        saveStorageFilter();
                         d._token = $("input[name='_token']").val();
                         d.length = 10;
                         d.categories = $("#categories").val();
@@ -360,10 +452,16 @@
                                     '</div>';
                             }
                     }
-                ]
+                ],
+
             });
             $('#searsh').click(function(){
                 table.draw();
+            });
+
+            $('#clear').click(function(){
+               emptyStorageFilter();
+               table.draw();
             });
 
             $(document).on("click", ".openModal" , function() {

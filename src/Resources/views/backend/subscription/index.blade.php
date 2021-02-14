@@ -20,6 +20,7 @@
                             <thead>
                             <tr>
                                 <th>Plano</th>
+                                <th>Status</th>
                                 <th>Validate</th>
                                 <th>Criado em</th>
                                 <th>Atualizado em</th>
@@ -116,7 +117,7 @@
                 processing: true,
                 autoWidth: false,
                 orderCellsTop: true,
-
+                "order": [[ 1, "desc" ]],
                 ajax: {
                     url: '{{ route('douapi.subscription.index') }}',
                     type: 'GET',
@@ -127,14 +128,24 @@
                 },
                 columns: [
                     {data: "plan_name", 'name': 'plan_name'},
+                    {data: "status", 'name': 'status', render:function(data, row){
+                        if(data==1){
+                            return '<span class="badge badge-success mr-1 ">Ativa</span>'
+                        }
+                        return '<span class="badge badge-secondary mr-1 ">Cancelada</span>';
+                    }},
                     {data: "validate_at", 'name': 'validate_at'},
                     {data: "created_at", 'name': 'created_at'},
                     {data: "updated_at", 'name': 'updated_at'},
                     {
-                        data: null, searchable: false, orderable: false, render: function (data) {
-                            var edit_button = "";
+                        data: null, searchable: false, orderable: false, render: function (data, display, row) {
+                            if(!data.configured){
+                                var edit_button = '<a href="'+data.configure_url+'" class="btn btn-xs btn-danger"> <span class="fas fa-cog"></span> <b>Configurar</b></a>';
+                            }else{
+                                var edit_button = '<a href="'+data.configure_url+'" class="btn btn-xs btn-secondary"> <span class="fas fa-cog"></span> <b>Editar</b></a>';
+                            }
 
-                                return edit_button
+                            return edit_button;
                         }
                     }
                 ]

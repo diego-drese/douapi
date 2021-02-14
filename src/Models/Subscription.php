@@ -13,16 +13,28 @@ class Subscription extends Model {
 		'status',
 		'validate_at',
 		'description',
+		'subscription_id',
 		'plan_id',
 		'billing_amount',
 		'plan_name',
 		'user_id',
+		
 		'email',
+		'email_notify',
+		'notify_email_pdf',
+		'notify_email_50_news',
+		
 		'api',
+		'api_notify',
+		'notify_api_xml',
+		'notify_api_all_news',
+		'notify_api_50_news',
+		
 		'session_id',
 		'filter',
-		'job',
+		'configured',
 	];
+
 
 	protected $table = 'subscription';
 	protected $connection = 'oka6_douapi';
@@ -48,6 +60,16 @@ class Subscription extends Model {
 	public static function getBySessionId($id){
 		return self::where('session_id', $id)->first();
 	}
+	public static function getBySubscriptionId($id){
+		return self::where('subscription_id', $id)->first();
+	}
 	
+	public static function getBy_id($_id, $userId=null){
+		$query = self::query();
+		if($userId){
+			$query->where('user_id', (int)$userId);
+		}
+		return $query->where('_id',new \MongoDB\BSON\ObjectId($_id))->first();
+	}
 	
 }

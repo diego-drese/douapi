@@ -43,6 +43,11 @@ class DouApiServiceProvider extends ServiceProvider {
 		);
 		$this->mergeConfigFrom(
 			__DIR__ . '/Config/stripe.php', 'stripe'
+		);$this->mergeConfigFrom(
+			__DIR__ . '/Config/profile_type.php', 'admin.profile_type'
+		);
+		$this->mergeConfigFrom(
+			__DIR__ . '/Config/profile_type.php', 'douapi.profile_type'
 		);
 		
 		if (php_sapi_name() != 'cli') {
@@ -66,8 +71,11 @@ class DouApiServiceProvider extends ServiceProvider {
 		$config = $this->app['config']->get($key, []);
 		if ($key == 'database.connections' && !isset($config['oka6_douapi'])) {
 			$this->app['config']->set($key, array_merge($config, require $path));
-		}
-		if ($key == 'stripe' && !isset($config['public_key'])) {
+		}elseif ($key == 'admin.profile_type') {
+			$this->app['config']->set($key, array_merge($config, require $path));
+		}elseif ($key == 'sulradio.profile_type') {
+			$this->app['config']->set($key, array_merge($config, require $path));
+		}elseif ($key == 'stripe' && !isset($config['public_key'])) {
 			$this->app['config']->set($key, array_merge($config, require $path));
 		}
 	}
