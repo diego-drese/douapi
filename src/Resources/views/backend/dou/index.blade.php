@@ -130,6 +130,9 @@
                     <div id="text">
 
                     </div>
+                    <div id="link">
+
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -449,6 +452,9 @@
                                             (data.text_start)+
                                             '</p>'+
                                         '</div>'+
+                                        '<div class="note-link">'+
+                                           '<a href="'+data.url_dou+'" target="_blank">Página PDF do DOU</a>'+
+                                        '</div>'+
                                     '</div>';
                             }
                     }
@@ -491,9 +497,8 @@
                         $('#modal #info').html(info);
                         $('#modal #title').html((data.identifica ? data.identifica : data.name));
                         $('#modal #text').html(data.text);
-                        if(data.emissora_id){
-                            $('#broadcast').html('<option value="'+data.emissora_id+'">'+data.emissora_name+'</option>').trigger('change');
-                        }
+                        $('#modal #link').html('<a href="'+data.url_dou+'" target="_blank">Página PDF do DOU</a>');
+
                     },
                     error: function (erro) {
                         toastr.error(erro.responseJSON.message, 'Erro');
