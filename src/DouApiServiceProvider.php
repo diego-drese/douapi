@@ -3,15 +3,7 @@
 namespace Oka6\DouApi;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
-use Oka6\Admin\Console\Commands\RefreshRoutes;
-use Oka6\Admin\Library\SessionManager;
-use Oka6\Admin\Models\Profile;
-use Oka6\Admin\Models\Resource;
-use Oka6\Admin\Models\User;
 
 
 class DouApiServiceProvider extends ServiceProvider {
