@@ -136,7 +136,7 @@ class Dou extends Model {
 			}, $notification->ids_dou_send);
 			$query->whereNotIn('_id', $ids);
 		}
-		$now    = new \DateTime('2021-02-12 00:00:00');
+		$now    = new \DateTime();
 		$now->setTime(0, 0, 0);
 		$result = $query
 			->where('date', '>=', MongoUtils::convertDatePhpToMongo($now))
