@@ -37,5 +37,5 @@ Route::group(['prefix' => $prefix_url, 'middleware' => ['web', 'auth', 'Oka6\Adm
 	});
 });
 
-Route::any('/subscription/cancel', 'Oka6\DouApi\Http\Controllers\SubscriptionController@cancel')->name('douapi.subscription.cancel');
+Route::any('/subscription/hook', 'Oka6\DouApi\Http\Controllers\SubscriptionController@hook')->name('subscription.hook');
 

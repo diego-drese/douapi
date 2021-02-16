@@ -210,5 +210,10 @@ class SubscriptionController extends DouApiController  {
 		return redirect(route('douapi.index'));
 	}
 	
+	public function hook(Request $request){
+		Log::info('SubscriptionController hook', ['request'=>$request->all()]);
+		return response()->json(['message' =>'success']);
+	}
+	
 	
 }
