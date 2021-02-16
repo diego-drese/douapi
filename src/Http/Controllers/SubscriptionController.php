@@ -202,6 +202,13 @@ class SubscriptionController extends DouApiController  {
 		
 	}
 	
+	public function readPdf($file){
+		if(file_exists(storage_path('douapi/dou-pdf-attachment/'.$file))){
+			return response()->file(storage_path('douapi/dou-pdf-attachment/'.$file));
+		}
+		toastr()->error('Arquivo nao encontrado', 'Error');
+		return redirect(route('douapi.index'));
+	}
 	
 	
 }

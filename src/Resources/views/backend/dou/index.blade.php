@@ -124,14 +124,10 @@
                     </button>
 
                 </div>
-
-
-
                 <div class="modal-body">
                     <div id="text">
 
                     </div>
-                  
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -284,7 +280,7 @@
                 tag:true,
                 minimumInputLength: 3,
                 ajax: {
-                    url: '{{route('dou.index')}}',
+                    url: '{{route('douapi.index')}}',
                     data: function (params) {
                         var query = {
                             search_category: params.term
@@ -309,7 +305,7 @@
                 tag:true,
                 minimumInputLength: 3,
                 ajax: {
-                    url: '{{route('dou.index')}}',
+                    url: '{{route('douapi.index')}}',
                     data: function (params) {
                         var query = {
                             search_type: params.term
@@ -411,7 +407,7 @@
                 searching: false,
                 lengthChange: false,
                 ajax: {
-                    url: '{{ route('dou.index') }}',
+                    url: '{{ route('douapi.index') }}',
                     type: 'GET',
                     data: function (d) {
                         saveStorageFilter();
@@ -472,7 +468,7 @@
             $(document).on("click", ".openModal" , function() {
                 var id = this.id.split('-')[1];
                 $.ajax({
-                    url: '{{ route('dou.index') }}',
+                    url: '{{ route('douapi.index') }}',
                     type: "get",
                     dataType: 'json',
                     data: {id:id},

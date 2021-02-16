@@ -5,6 +5,7 @@ namespace Oka6\DouApi\Models;
 use Jenssegers\Mongodb\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Oka6\Admin\Helper\Helper;
+use Oka6\Admin\Library\MongoUtils;
 use Oka6\Admin\Models\Sequence;
 
 class Subscription extends Model {
@@ -12,6 +13,7 @@ class Subscription extends Model {
 	protected $fillable = [
 		'status',
 		'validate_at',
+		'notified_at',
 		'description',
 		'subscription_id',
 		'plan_id',
@@ -60,8 +62,18 @@ class Subscription extends Model {
 	public static function getBySessionId($id){
 		return self::where('session_id', $id)->first();
 	}
+	
 	public static function getBySubscriptionId($id){
 		return self::where('subscription_id', $id)->first();
+	}
+	
+	public static function getToNotify(){
+		$now = new \DateTime();
+		$nextNotification = new \DateTime();
+		
+		return self::where('validate_at', '>=', MongoUtils::convertDatePhpToMongo($now))
+			->where('configured', 1)
+			->get();
 	}
 	
 	public static function getBy_id($_id, $userId=null){

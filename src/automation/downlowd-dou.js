@@ -89,6 +89,40 @@ let saveZip  = function (result){
     })
 }
 
+let downloadPdf = function (){
+    var getParameterByName  = function(name, url) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+    var el = document.querySelectorAll("[href*='.pdf']");
+    var searchResults = [];
+    el.forEach(function(result) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", result.href, false);
+        xhr.overrideMimeType("text/plain; charset=x-user-defined");
+        xhr.send();
+        searchResults.push({'name': getParameterByName('dl', result.href), 'data':xhr.responseText});
+    });
+    return searchResults;
+}
+let savePdf  = function (result){
+    result.forEach(function(r) {
+        var buffer = new ArrayBuffer(r['data'].length);
+        var bytes = new Uint8Array(buffer);
+        for (var i = 0; i < r['data'].length; i++) {
+            bytes[i] = r['data'].charCodeAt(i);
+        }
+        var pathFile = '../storage/douapi/dou-pdf-attachment/'+r['name'];
+        fs.writeFileSync(pathFile, new Buffer.from(bytes), 'binary');
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss')+ ' - Download dou, save pdf['+pathFile+']');
+    })
+}
+
 function *run() {
     var nightmare   = Nightmare({show: true, waitTimeout: 1200000, gotoTimeout: 1200000, loadTimeout:1200000, executionTimeout:1200000});
     var links       = [];
@@ -122,7 +156,14 @@ function *run() {
                     .goto(link)
                     .wait(1000)
                     .evaluate(downloadZip)
-                    .then(saveZip)
+                    .then(saveZip);
+
+                yield nightmare
+                    .goto(link)
+                    .wait(1000)
+                    .evaluate(downloadPdf)
+                    .then(savePdf)
+
             }
 
         }

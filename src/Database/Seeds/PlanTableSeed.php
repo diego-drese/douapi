@@ -34,7 +34,7 @@ class PlanTableSeed extends Seeder {
 			$dataSave[] = [
 				'name'                  => 'Envio de XML por api',
 				'description'           => '<li>Envio por api</li><li>Arquivos XML</li>',
-				'status'                => Plan::STATUS_ACTIVE,
+				'status'                => Plan::STATUS_INACTIVE,
 				'value'                 => (double)10.00,
 				'email_notify'          => Plan::STATUS_INACTIVE,
 				'api_notify'            => Plan::STATUS_ACTIVE,
@@ -52,7 +52,7 @@ class PlanTableSeed extends Seeder {
 			$dataSave[] = [
 				'name'                  => 'Todas as noticias por api',
 				'description'           => '<li>Envio por api</li><li>Todas as notícias</li>',
-				'status'                => Plan::STATUS_ACTIVE,
+				'status'                => Plan::STATUS_INACTIVE,
 				'value'                 => (double)30.00,
 				'email_notify'          => Plan::STATUS_INACTIVE,
 				'api_notify'            => Plan::STATUS_ACTIVE,
@@ -88,7 +88,7 @@ class PlanTableSeed extends Seeder {
 			$dataSave[] = [
 				'name'                  => '50 noticias por api',
 				'description'           => '<li>Envio por api</li><li>Até 50 notícias diárias</li><li>Possibilidade de filtro</li>',
-				'status'                => Plan::STATUS_ACTIVE,
+				'status'                => Plan::STATUS_INACTIVE,
 				'value'                 => (double)15.00,
 				'email_notify'          => Plan::STATUS_INACTIVE,
 				'api_notify'            => Plan::STATUS_ACTIVE,
@@ -129,7 +129,7 @@ class PlanTableSeed extends Seeder {
 				$dataSave[] = [
 					'name'                  => 'Envio de XML por api',
 					'description'           => '<li>Envio por api</li><li>Arquivos XML</li>',
-					'status'                => Plan::STATUS_ACTIVE,
+					'status'                => Plan::STATUS_INACTIVE,
 					'value'                 => (double)10.00,
 					'email_notify'          => Plan::STATUS_INACTIVE,
 					'api_notify'            => Plan::STATUS_ACTIVE,
@@ -147,7 +147,7 @@ class PlanTableSeed extends Seeder {
 				$dataSave[] = [
 					'name'                  => 'Todas as noticias por api',
 					'description'           => '<li>Envio por api</li><li>Todas as notícias</li>',
-					'status'                => Plan::STATUS_ACTIVE,
+					'status'                => Plan::STATUS_INACTIVE,
 					'value'                 => (double)30.00,
 					'email_notify'          => Plan::STATUS_INACTIVE,
 					'api_notify'            => Plan::STATUS_ACTIVE,
@@ -183,7 +183,7 @@ class PlanTableSeed extends Seeder {
 				$dataSave[] = [
 					'name'                  => '50 noticias por api',
 					'description'           => '<li>Envio por api</li><li>Até 50 notícias diárias</li><li>Possibilidade de filtro</li>',
-					'status'                => Plan::STATUS_ACTIVE,
+					'status'                => Plan::STATUS_INACTIVE,
 					'value'                 => (double)15.00,
 					'email_notify'          => Plan::STATUS_INACTIVE,
 					'api_notify'            => Plan::STATUS_ACTIVE,
@@ -197,8 +197,6 @@ class PlanTableSeed extends Seeder {
 					'created_at'            => Carbon::now()->format('Y-m-d H:i:s'),
 					'updated_at'            => Carbon::now()->format('Y-m-d H:i:s'),
 				];
-				
-				
 			}
 			
 			Plan::insert($dataSave);

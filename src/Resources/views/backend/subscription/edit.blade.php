@@ -228,7 +228,7 @@
                 tag: true,
                 minimumInputLength: 3,
                 ajax: {
-                    url: '{{route('dou.index')}}',
+                    url: '{{route('douapi.index')}}',
                     data: function (params) {
                         var query = {
                             search_category: params.term
@@ -253,7 +253,7 @@
                 tag: true,
                 minimumInputLength: 3,
                 ajax: {
-                    url: '{{route('dou.index')}}',
+                    url: '{{route('douapi.index')}}',
                     data: function (params) {
                         var query = {
                             search_type: params.term
@@ -280,7 +280,7 @@
                 width: '100%',
                 tags: true,
                 maximumSelectionLength: 10,
-                tokenSeparators: [',', ' '],
+                tokenSeparators: [','],
                 createTag: function (params) {
                     var term = $.trim(params.term);
 

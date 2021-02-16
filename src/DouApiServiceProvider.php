@@ -2,6 +2,7 @@
 
 namespace Oka6\DouApi;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
@@ -20,6 +21,8 @@ class DouApiServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	public function boot() {
+		setlocale(LC_ALL, "pt_BR.utf8");
+		Carbon::setLocale(config('app.locale'));
 		
 		$this->loadViewsFrom(__DIR__ . '/Resources/views', 'DouApi');
 		$this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
@@ -43,7 +46,9 @@ class DouApiServiceProvider extends ServiceProvider {
 		);
 		$this->mergeConfigFrom(
 			__DIR__ . '/Config/stripe.php', 'stripe'
-		);$this->mergeConfigFrom(
+		);
+		
+		$this->mergeConfigFrom(
 			__DIR__ . '/Config/profile_type.php', 'admin.profile_type'
 		);
 		$this->mergeConfigFrom(
@@ -73,7 +78,7 @@ class DouApiServiceProvider extends ServiceProvider {
 			$this->app['config']->set($key, array_merge($config, require $path));
 		}elseif ($key == 'admin.profile_type') {
 			$this->app['config']->set($key, array_merge($config, require $path));
-		}elseif ($key == 'sulradio.profile_type') {
+		}elseif ($key == 'douapi.profile_type') {
 			$this->app['config']->set($key, array_merge($config, require $path));
 		}elseif ($key == 'stripe' && !isset($config['public_key'])) {
 			$this->app['config']->set($key, array_merge($config, require $path));

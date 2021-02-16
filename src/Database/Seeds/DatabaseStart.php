@@ -25,6 +25,9 @@ class DatabaseStart extends Seeder {
 			$this->command->line('Run Oka6:AdminRoutes');
 			Artisan::call('Oka6:AdminRoutes');
 			
+			$this->command->line('Run DouApi:ProfileTableSeed');
+			$this->call(\Oka6\DouApi\Database\Seeds\ProfileTableSeed::class);
+			
 			$this->command->line('Run vendor:publish');
 			Artisan::call('vendor:publish --tag=0 --force');
 			return;
@@ -40,6 +43,9 @@ class DatabaseStart extends Seeder {
 		
 		$this->command->line('Run Oka6:AdminRoutes');
 		Artisan::call('Oka6:AdminRoutes');
+		
+		$this->command->line('Run DouApi:ProfileTableSeed');
+		$this->call(\Oka6\DouApi\Database\Seeds\ProfileTableSeed::class);
 		
 		$this->command->line('Run vendor:publish');
 		Artisan::call('vendor:publish --tag=0 --force');
