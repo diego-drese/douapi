@@ -19,7 +19,7 @@ return [
 		'strict' => false,
 		'engine' => null,
 		'options' => [
-			'db' => 'admin' // sets the authentication database required by mongo 3
+            'database' => env('OKA6_DOUAPI_DB_NAME', 'admin') // sets the authentication database required by mongo 3
 		]
 	]
 ];
