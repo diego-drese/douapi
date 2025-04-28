@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
+use MongoDB\BSON\ObjectId;
 use Oka6\Admin\Http\Library\ResourceAdmin;
 use Oka6\Admin\Library\MongoUtils;
 use Oka6\Admin\Models\User;
@@ -135,16 +136,14 @@ class SubscriptionController extends DouApiController  {
 			return response()->json(['error' => ['message'=>$e->getError()->message]], 400);
 		}
 		return response()->json(['sessionId' => $checkout_session['id'], 'publicKey'=>Config::get('stripe.public_key')]);
-		
 	}
 	
 	public function success(Request $request){
 		Log::info('SubscriptionController success', ['request'=>$request->all()]);
 		$user = Auth::user();
-		$userFromRequest = User::getBy_Id($request->get('user_id'));
+		$userFromRequest = User::where('_id', new ObjectId($request->get('user_id')))->first();
 		$planFromRequest = Plan::getBy_Id($request->get('plan_id'));
 		$sessionId       = $request->get('session_id');
-		
 		if(!isset($userFromRequest->id) || $user->id!=$userFromRequest->id ){
 			Log::error('SubscriptionController success, user other than authenticated', ['request'=>$request->all(), 'auth'=>$user]);
 			return $this->renderView('DouApi::backend.errors.500', ['title' => 'Erro ao finalizar sua assinatura', 'message'=> 'O usuário que está logado é diferente do retornado pelo stripe.']);
