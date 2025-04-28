@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Oka6\Admin\Helper\Helper;
+use Oka6\DouApi\Helpers\Helper;
 use Oka6\Admin\Library\MongoUtils;
 use Oka6\Admin\Models\User;
 use Oka6\DouApi\Mail\News;

@@ -4,8 +4,8 @@ namespace Oka6\DouApi\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
-use Oka6\Admin\Helper\Helper;
 use Oka6\Admin\Models\Sequence;
+use Oka6\DouApi\Helpers\Helper;
 
 class DouType extends Model {
 	const TABLE = 'dou_type';
@@ -43,16 +43,16 @@ class DouType extends Model {
 		}
 		return $douType;
 	}
-	
+
 	public static function getBySlugWithCache($slug) {
 		return Cache::tags(['sulradio'])->remember('dou-type-'.$slug, 120, function () use($slug){
 			return self::where('slug', $slug)->first();
 		});
 	}
-	
+
 	public static function searchCategory($text) {
 		$slug = Helper::slugify($text);
 		return self::where('slug','like', '%'.$slug.'%')->limit(10)->get();
 	}
-	
+
 }

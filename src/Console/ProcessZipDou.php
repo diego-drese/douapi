@@ -5,7 +5,7 @@ namespace Oka6\DouApi\Console;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Oka6\Admin\Helper\Helper;
+use Oka6\DouApi\Helpers\Helper;
 use Oka6\Admin\Library\MongoUtils;
 use Oka6\DouApi\Models\Dou;
 use Oka6\DouApi\Models\DouCategory;
@@ -160,7 +160,7 @@ class ProcessZipDou extends Command {
 				$attributes     = (array)$parseFile->article->attributes();
 				$attributes     = $attributes['@attributes'];
 				$body           = (array)$parseFile->article->body;
-				
+
 				$douType        = DouType::createOrUpdate($attributes['artType']);
 				$pubDate        = Helper::convertDateBrToMysql($attributes['pubDate']);
 				$douCategories  = DouCategory::createOrUpdate($attributes['artCategory']);

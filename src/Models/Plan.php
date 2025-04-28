@@ -4,7 +4,7 @@ namespace Oka6\DouApi\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
-use Oka6\Admin\Helper\Helper;
+use Oka6\DouApi\Helpers\Helper;
 use Oka6\Admin\Models\Sequence;
 
 class Plan extends Model {
