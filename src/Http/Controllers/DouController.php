@@ -53,6 +53,10 @@ class DouController extends DouApiController  {
 			if($subject){
 				$query->withSubject($subject);
 			}
+            $content        = $request->get('content');
+			if($content){
+				$query->withText($content);
+			}
 			$pub            = $request->get('pub');
 			if($pub){
 				$query->withPub($pub);

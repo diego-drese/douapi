@@ -25,7 +25,14 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="subject">Assunto</label>
-                            <input id="subject" type="search" name="dates" class="form-control" autocomplete="off" >
+                            <input id="subject" type="search" name="subject" class="form-control" autocomplete="off" >
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="subject">Conteúdo</label>
+                            <input id="content" type="search" name="content" class="form-control" autocomplete="off" >
                         </div>
                     </div>
 
@@ -190,6 +197,7 @@
                 $('#categories').val('').trigger('change')
                 $('#type').val('').trigger('change');
                 $('#subject').val('').trigger('change');
+                $('#content').val('').trigger('change');
                 $('#pub').val('').trigger('change');
                 $('#period').val('').trigger('change');
                 $('#order').val('date').trigger('change');
@@ -222,6 +230,7 @@
                 localStorage.setItem('categories', JSON.stringify(categoriesStorage));
                 localStorage.setItem('type', JSON.stringify(typeStorage));
                 localStorage.setItem('subject', $("#subject").val());
+                localStorage.setItem('content', $("#content").val());
                 localStorage.setItem('pub', JSON.stringify(pubStorage));
                 localStorage.setItem('period', $("#period").val());
                 localStorage.setItem('order', $("#order").val());
@@ -231,6 +240,7 @@
                 var categoriesStorage   = localStorage.getItem('categories');
                 var typeStorage         = localStorage.getItem('type');
                 var subjectStorage      = localStorage.getItem('subject');
+                var contentStorage      = localStorage.getItem('content');
                 var pubStorage          = localStorage.getItem('pub');
                 var periodStorage       = localStorage.getItem('period');
                 var orderStorage        = localStorage.getItem('order');
@@ -252,6 +262,10 @@
                 }
                 if(subjectStorage){
                     $('#subject').val(subjectStorage)
+                }
+
+                if(contentStorage){
+                    $('#content').val(contentStorage)
                 }
 
                 if(pubStorage){
@@ -416,6 +430,7 @@
                         d.categories = $("#categories").val();
                         d.types = $("#type").val();
                         d.subject = $("#subject").val();
+                        d.content = $("#content").val();
                         d.pub = $("#pub").val();
                         d.period = $("#period").val();
                         d.my_order = $("#order").val();

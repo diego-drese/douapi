@@ -67,7 +67,16 @@ class Dou extends Model {
 			$q->where('identifica', 'like' , '%'.$subject.'%')
 				->orWhere('name', 'like', '%'.$subject.'%');
 		});
-	}public static function scopeWithPub($query, $pub){
+	}
+    public static function scopeWithText($query, $subject){
+		if(empty($subject)){
+			return $query;
+		}
+		return $query->where(function($q) use($subject){
+			$q->where('text', 'like' , '%'.$subject.'%');
+		});
+	}
+    public static function scopeWithPub($query, $pub){
 		if(!is_array($pub)){
 			return $query;
 		}
