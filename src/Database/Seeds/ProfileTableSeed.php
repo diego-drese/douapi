@@ -13,6 +13,10 @@ use Oka6\DouApi\Models\Dou;
 class ProfileTableSeed extends Seeder {
 	
 	public function run() {
+        if(Profile::where('id', Dou::DOU_PROFILE_ID)->first()){
+            return;
+        }
+
 		Profile::where('id', Dou::DOU_PROFILE_ID)->delete();
 		$resources      = Resource::where('route_name', 'LIKE', 'douapi.%')->get();
 		$resourcesArray = $resources->pluck('id')->toArray();
@@ -31,6 +35,5 @@ class ProfileTableSeed extends Seeder {
 				'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
 			]
 		);
-		
 	}
 }

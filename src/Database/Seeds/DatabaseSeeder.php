@@ -11,7 +11,6 @@ class DatabaseSeeder extends Seeder {
 	 * @return void
 	 */
 	public function run() {
-		$this->call(ResourceTableSeed::class);
 		$this->call(PlanTableSeed::class);
 	}
 }

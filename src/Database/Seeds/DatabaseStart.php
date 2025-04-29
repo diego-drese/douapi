@@ -19,33 +19,34 @@ class DatabaseStart extends Seeder {
 			$this->command->line('Run Config:cache');
 			Artisan::call('config:cache');
 			
-			$this->command->line('Run DouApi:DataBaseStart');
-			$this->call(\Oka6\DouApi\Database\Seeds\DatabaseSeeder::class);
-			
 			$this->command->line('Run Oka6:AdminRoutes');
 			Artisan::call('Oka6:AdminRoutes');
 			
 			$this->command->line('Run DouApi:ProfileTableSeed');
-			$this->call(\Oka6\DouApi\Database\Seeds\ProfileTableSeed::class);
+			$this->call(ProfileTableSeed::class);
+
+            $this->command->line('Run DouApi:PlanTableSeed');
+            $this->call(PlanTableSeed::class);
 			
 			$this->command->line('Run vendor:publish');
 			Artisan::call('vendor:publish --tag=0 --force');
 			return;
 		}
+
 		$this->command->line('Run Config:cache');
 		Artisan::call('config:cache');
 		
 		$this->command->line('Run Admin:DatabaseSeeder');
 		$this->call(\Oka6\Admin\Database\Seeds\DatabaseSeeder::class);
 		
-		$this->command->line('Run DouApi:DataBaseStart');
-		$this->call(\Oka6\DouApi\Database\Seeds\DatabaseSeeder::class);
-		
 		$this->command->line('Run Oka6:AdminRoutes');
 		Artisan::call('Oka6:AdminRoutes');
 		
 		$this->command->line('Run DouApi:ProfileTableSeed');
-		$this->call(\Oka6\DouApi\Database\Seeds\ProfileTableSeed::class);
+		$this->call(ProfileTableSeed::class);
+
+        $this->command->line('Run DouApi:PlanTableSeed');
+		$this->call(PlanTableSeed::class);
 		
 		$this->command->line('Run vendor:publish');
 		Artisan::call('vendor:publish --tag=0 --force');
