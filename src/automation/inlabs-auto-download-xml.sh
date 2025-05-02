@@ -55,10 +55,15 @@ fi
 ## DOWNLOAD ##
 for secao in $tipo_dou;
 do
-        download="curl --silent --insecure -fL -b cookies.iakim 'https://inlabs.in.gov.br/index.php?p=$ano-$mes-$dia&dl=$ano-$mes-$dia-$secao.zip' -H 'origem: 736372697074' --output /var/www/html/storage/douapi/dou-zip/$ano-$mes-$dia-$secao.zip"
-        echo $download > $ano-$mes-$dia-$secao.sh
-        sh $ano-$mes-$dia-$secao.sh
-        rm -rf $ano-$mes-$dia-$secao.sh
+       curl --silent --insecure -fL -b cookies.iakim "https://inlabs.in.gov.br/index.php?p=$ano-$mes-$dia&dl=$ano-$mes-$dia-$secao.zip" \
+                -H 'origem: 736372697074' \
+                --output "/var/www/html/storage/douapi/dou-zip/$ano-$mes-$dia-$secao.zip"
+
+      # Verifica se o arquivo é realmente zip
+      if ! file "/var/www/html/storage/douapi/dou-zip/$ano-$mes-$dia-$secao.zip" | grep -q "Zip archive data"; then
+          echo "⚠️ Arquivo inválido (não é ZIP). Removendo: $ano-$mes-$dia-$secao.zip"
+          rm -f "/var/www/html/storage/douapi/dou-zip/$ano-$mes-$dia-$secao.zip"
+      fi
 done
 
 rm -rf cookies.iakim

@@ -2,7 +2,6 @@
 
 namespace Oka6\DouApi\Models;
 
-use Illuminate\Support\Facades\Config;
 use Jenssegers\Mongodb\Eloquent\Model;
 use Oka6\DouApi\Helpers\Helper;
 use Oka6\Admin\Library\MongoUtils;
