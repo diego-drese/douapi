@@ -150,17 +150,63 @@ class Dou extends Model {
 			->where('date', '>=', MongoUtils::convertDatePhpToMongo($now))
 			->limit(($notification && $notification->accumulated_dou_send ? $limit-$notification->accumulated_dou_send : $limit))
 			->get();
-		foreach ($result as &$value){
-			$categories         = $value->categories;
-			$value->organ       = $categories[0]['name'];
-			$value->subOrgans   = '';
-			for ($i=1;$i<count($categories);$i++){
-				$value->subOrgans.=($i>1? ' / ': '').$categories[$i]['name'];
-			}
-			
-		}
-		return $result;
-		
+
+        foreach ($result as &$value) {
+            $categories         = $value->categories;
+            $value->organ       = $categories[0]['name'];
+            $value->subOrgans   = '';
+            for ($i = 1; $i < count($categories); $i++) {
+                $value->subOrgans .= ($i > 1 ? ' / ' : '') . $categories[$i]['name'];
+            }
+
+            // NOVO BLOCO: detectar termos que deram match
+            $matchedBy = [];
+            if (!empty($filter['subject'])) {
+                foreach ($filter['subject'] as $term) {
+                    if (
+                        stripos($value->identifica ?? '', $term) !== false ||
+                        stripos($value->name ?? '', $term) !== false
+                    ) {
+                        $matchedBy['Assunto'][] = $term;
+                    }
+                }
+            }
+
+            if (!empty($filter['content'])) {
+                foreach ($filter['content'] as $term) {
+                    if (stripos($value->text ?? '', $term) !== false) {
+                        $matchedBy['Conteúdo'][] = $term;
+                    }
+                }
+            }
+
+            if (!empty($filter['pub'])) {
+                foreach ($filter['pub'] as $term) {
+                    if (strcasecmp($value->pub_name ?? '', $term) === 0) {
+                        $matchedBy['Sessão'][] = $term;
+                    }
+                }
+            }
+
+            if (!empty($filter['type'])) {
+                $types = array_column($filter['type'], 'id');
+                if (in_array((int)($value->type_id ?? 0), $types)) {
+                    $matchedBy['Tipo'][] = $value->type_id;
+                }
+            }
+
+            if (!empty($filter['categories'])) {
+                $catIds = array_column($filter['categories'], 'id');
+                foreach ($value->categories ?? [] as $cat) {
+                    if (in_array((int)$cat['id'], $catIds)) {
+                        $matchedBy['Categoria'][] = $cat['name'];
+                    }
+                }
+            }
+            $value->matched_by = $matchedBy;
+        }
+
+        return $result;
 	}
 	
 }
