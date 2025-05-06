@@ -15,15 +15,23 @@ Segue abaixo as notícias encontrada no Diário Oficial da União de <b>{{date('
     <div class="note-content">
         <p class="note-inner-content text-muted">{{$news->text_start}}</p>
         @if(!empty($news->matched_by))
-            <div class="note-inner-content" style="font-style: italic; color: #666;">
-                <strong>Encontrado pelos termos:</strong><br/>
-                <ul style="margin: 0; padding-left: 20px;">
-                    @foreach($news->matched_by as $campo => $termos)
-                        <li><strong>{{ $campo }}:</strong> {{ implode(', ', $termos) }}</li>
-                    @endforeach
-                </ul>
+            <p class="note-inner-content" style="margin: 10px 0 5px; font-style: italic; color: #555;">
+                <strong>Encontrado pelos termos:</strong>
+            </p>
+            <div style="margin-left: 15px; color: #444;">
+                @foreach($news->matched_by as $campo => $termos)
+                    <div style="margin-bottom: 6px;">
+                        <strong style="display: block; margin-bottom: 2px;">{{ $campo }}:</strong>
+                        @foreach($termos as $termo)
+                            <span style="display: inline-block;background-color: #f0f0f5;color: #333;font-size: 12px;padding: 4px 8px;margin: 2px 4px 2px 0;border-radius: 12px;border: 1px solid #ccc;">
+                                {{ $termo }}
+                            </span>
+                        @endforeach
+                    </div>
+                @endforeach
             </div>
-    @endif
+        @endif
+
     </div>
     <div class="note-link">
         <a clicktracking=off href="{{$news->url_dou}}" target="_blank">Notícia na íntegra</a>
